@@ -1,3 +1,21 @@
+<?php
+    function generatePassword($length) {
+        $password = '';
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-_=+';
+
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $password;
+    }
+
+    if (isset($_GET["length"]) && !empty("length")) {
+        $passwordLength = $_GET["length"];
+        $generatedPassword = generatePassword($passwordLength);
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,12 +34,21 @@
 <body>
     <main>
         <h1 class="text-center">Password Generator</h1>
-        <div class="container w-50 d-flex flex-column align-items-center ">
+        <div class="container w-50 d-flex flex-column align-items-center">
+
+        <?php if(isset($generatedPassword)): ?>
+            <div class="alert alert-info">
+                La password generata è: <strong><?= $generatedPassword ?></strong>
+            </div>
+            <?php endif; ?> 
+
             <form action="index.php" method="GET">
                 <label for="length">Lunghezza Password:</label>
                 <input type="number" id="length" name="length" min="1" max="50" required>
                 <button type="submit">Genera Password</button>
             </form>
+
+             
        </div> 
 
     </main>
